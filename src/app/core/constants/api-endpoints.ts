@@ -1,31 +1,35 @@
 export const API_ENDPOINTS = {
 
   auth: {
-    login: '/auth/login',
-    register: '/auth/register',
-    refreshToken: '/auth/refresh-token',
-    logout: '/auth/logout'
+    login: '/Auth/login',
+    register: '/Auth/register',
+    refresh: '/Auth/refresh',
+    revoke: '/Auth/revoke'
   },
 
   owner: {
     merchants: '/merchants',
     partners: '/partners',
-    customers: '/customers'
+    customers: '/customers',
+    reports: '/reports'
   },
 
   merchant: {
+    outlets: '/outlets',
     products: '/products',
-    orders: '/orders'
-  },
-
-  partner: {
-    customers: '/customers',
-    commissions: '/commissions'
+    bills: '/bills'
   },
 
   customer: {
-    products: '/products',
-    orders: '/orders'
+    bills: '/bills',
+    profile: '/profile'
+  },
+
+  partner: {
+    accounts: '/accounts',
+    webhooks: '/webhooks',
+    commissions: '/commissions'
   }
+};
 
 };

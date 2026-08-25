@@ -1,0 +1,67 @@
+<div class="min-vh-100 d-flex align-items-center justify-content-center bg-light py-4">
+  <div class="card shadow-sm" style="min-width: 520px; max-width: 560px;">
+    <div class="card-header bg-primary text-white py-3">
+      <h5 class="mb-0"><i class="bi bi-shop me-2"></i>Merchant Registration</h5>
+      <small class="opacity-75">Create your merchant account</small>
+    </div>
+
+    <div class="card-body p-4">
+      <form #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)" novalidate>
+        <div class="row">
+          <div class="col-12 mb-3">
+            <label for="email" class="form-label fw-semibold">Email</label>
+            <input type="email" class="form-control" id="email" name="email"
+                   [(ngModel)]="form.email" #emailRef="ngModel"
+                   required email placeholder="business@example.com">
+            <div *ngIf="emailRef.invalid && emailRef.touched" class="text-danger small mt-1">
+              <span *ngIf="emailRef.errors?.['required']">Email is required.</span>
+              <span *ngIf="emailRef.errors?.['email']">Enter a valid email address.</span>
+            </div>
+          </div>
+
+          <div class="col-12 mb-3">
+            <label for="phone" class="form-label fw-semibold">Mobile Number</label>
+            <input type="tel" class="form-control" id="phone" name="phoneNumber"
+                   [(ngModel)]="form.phoneNumber" #phoneRef="ngModel"
+                   required placeholder="+91 9876543210">
+            <div *ngIf="phoneRef.invalid && phoneRef.touched" class="text-danger small mt-1">
+              Mobile number is required.
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="password" class="form-label fw-semibold">Password</label>
+            <input type="password" class="form-control" id="password" name="password"
+                   [(ngModel)]="form.password" #passwordRef="ngModel"
+                   required minlength="6" placeholder="••••••••">
+            <div *ngIf="passwordRef.invalid && passwordRef.touched" class="text-danger small mt-1">
+              <span *ngIf="passwordRef.errors?.['required']">Password is required.</span>
+              <span *ngIf="passwordRef.errors?.['minlength']">Minimum 6 characters.</span>
+            </div>
+          </div>
+
+          <div class="col-md-6 mb-3">
+            <label for="confirmPassword" class="form-label fw-semibold">Confirm Password</label>
+            <input type="password" class="form-control" id="confirmPassword" name="confirmPassword"
+                   [(ngModel)]="form.confirmPassword" #confirmRef="ngModel"
+                   required placeholder="••••••••">
+            <div *ngIf="confirmRef.invalid && confirmRef.touched" class="text-danger small mt-1">
+              Please confirm your password.
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="alert alert-danger py-2 small">{{ errorMessage }}</div>
+
+        <button type="submit" class="btn btn-primary w-100 mt-1" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+          {{ isLoading ? 'Creating account...' : 'Create Merchant Account' }}
+        </button>
+      </form>
+
+      <p class="text-center small text-muted mt-3 mb-0">
+        Already have an account? <a routerLink="/auth/login">Sign in</a>
+      </p>
+    </div>
+  </div>
+</div>

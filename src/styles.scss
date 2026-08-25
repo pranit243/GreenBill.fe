@@ -1,1 +1,16 @@
-/* You can add global styles to this file, and also import other style files */
+/* Green Bill global styles */
+
+:root {
+  --gb-primary: #2d6a4f;
+  --gb-secondary: #52b788;
+  --gb-accent: #b7e4c7;
+}
+
+body {
+  background-color: #f8f9fa;
+  font-family: 'Segoe UI', system-ui, sans-serif;
+}
+
+main {
+  min-height: calc(100vh - 56px);
+}

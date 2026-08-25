@@ -1,0 +1,36 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-success">
+  <div class="container-fluid">
+    <a class="navbar-brand fw-bold" routerLink="/">
+      <i class="bi bi-receipt-cutoff me-2"></i>Green Bill
+    </a>
+
+    <button class="navbar-toggler" type="button"
+            data-bs-toggle="collapse" data-bs-target="#gbNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="gbNavbar">
+      <ul class="navbar-nav me-auto" *ngIf="isAuthenticated">
+        <li class="nav-item">
+          <a class="nav-link" [routerLink]="dashboardRoute" routerLinkActive="active">
+            <i class="bi bi-speedometer2 me-1"></i>Dashboard
+          </a>
+        </li>
+      </ul>
+
+      <div class="ms-auto d-flex align-items-center gap-2">
+        <ng-container *ngIf="isAuthenticated; else loginLink">
+          <span class="badge bg-white text-success px-3 py-2">{{ role }}</span>
+          <button class="btn btn-outline-light btn-sm" (click)="logout()">
+            <i class="bi bi-box-arrow-right me-1"></i>Logout
+          </button>
+        </ng-container>
+        <ng-template #loginLink>
+          <a class="btn btn-outline-light btn-sm" routerLink="/auth/login">
+            <i class="bi bi-box-arrow-in-right me-1"></i>Sign In
+          </a>
+        </ng-template>
+      </div>
+    </div>
+  </div>
+</nav>

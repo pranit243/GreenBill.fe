@@ -1,0 +1,51 @@
+<div class="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+  <div class="card shadow-sm" style="min-width: 400px; max-width: 440px;">
+    <div class="card-body p-4">
+      <div class="text-center mb-4">
+        <i class="bi bi-receipt-cutoff text-success" style="font-size: 2.5rem;"></i>
+        <h4 class="fw-bold text-success mt-2">Green Bill</h4>
+        <p class="text-muted small mb-0">Sign in to your account</p>
+      </div>
+
+      <form #loginForm="ngForm" (ngSubmit)="onSubmit(loginForm)" novalidate>
+        <div class="mb-3">
+          <label for="email" class="form-label fw-semibold">Email</label>
+          <input type="email" class="form-control" id="email" name="email"
+                 [(ngModel)]="form.email" #emailRef="ngModel"
+                 required email placeholder="you@example.com">
+          <div *ngIf="emailRef.invalid && emailRef.touched" class="text-danger small mt-1">
+            <span *ngIf="emailRef.errors?.['required']">Email is required.</span>
+            <span *ngIf="emailRef.errors?.['email']">Enter a valid email address.</span>
+          </div>
+        </div>
+
+        <div class="mb-3">
+          <label for="password" class="form-label fw-semibold">Password</label>
+          <input type="password" class="form-control" id="password" name="password"
+                 [(ngModel)]="form.password" #passwordRef="ngModel"
+                 required minlength="6" placeholder="••••••••">
+          <div *ngIf="passwordRef.invalid && passwordRef.touched" class="text-danger small mt-1">
+            <span *ngIf="passwordRef.errors?.['required']">Password is required.</span>
+            <span *ngIf="passwordRef.errors?.['minlength']">Minimum 6 characters.</span>
+          </div>
+        </div>
+
+        <div *ngIf="errorMessage" class="alert alert-danger py-2 small">{{ errorMessage }}</div>
+
+        <button type="submit" class="btn btn-success w-100" [disabled]="isLoading">
+          <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+          {{ isLoading ? 'Signing in...' : 'Sign In' }}
+        </button>
+      </form>
+
+      <hr class="my-3">
+      <p class="text-center small text-muted mb-0">
+        Register as:
+        <a routerLink="/owner/auth/register">Owner</a> &middot;
+        <a routerLink="/merchant/auth/register">Merchant</a> &middot;
+        <a routerLink="/customer/auth/register">Customer</a> &middot;
+        <a routerLink="/partner/auth/register">Partner</a>
+      </p>
+    </div>
+  </div>
+</div>
