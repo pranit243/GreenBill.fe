@@ -1,4 +1,107 @@
-<app-navbar></app-navbar>
-<main>
-  <router-outlet />
-</main>
+<div class="app">
+  @if (isAuthenticated) {
+    @if (sidebarOpen) {
+      <div
+        class="sidebar-overlay"
+        (click)="closeSidebar()">
+      </div>
+    }
+
+    <app-sidebar
+      [isOpen]="sidebarOpen"
+      [selectedMenu]="selectedMenu"
+      (menuSelected)="onMenuSelected($event)"
+      (sidebarClosed)="closeSidebar()">
+    </app-sidebar>
+  }
+
+  <div class="main">
+    @if (isAuthenticated) {
+      <app-navbar
+        (menuClicked)="toggleSidebar()"
+        (profileClicked)="openProfile()">
+      </app-navbar>
+    }
+    <main>
+      <router-outlet />
+    </main>
+  </div>
+
+  @if (profileOpen && isAuthenticated) {
+    <div
+      class="modal-overlay"
+      (click)="closeProfile()">
+      <div
+        class="profile-modal"
+        (click)="$event.stopPropagation()">
+        <button
+          type="button"
+          class="close-button"
+          (click)="closeProfile()">
+          <span class="material-symbols-outlined">
+            close
+          </span>
+        </button>
+        <img
+          src="https://i.pravatar.cc/150?img=12"
+          alt="Profile"
+          class="modal-image"
+        />
+        <h2>
+          {{ profile.name }}
+        </h2>
+        <p class="modal-role">
+          {{ profile.role }}
+        </p>
+        <div class="details">
+          <div class="detail">
+            <span class="material-symbols-outlined">
+              mail
+            </span>
+            <div>
+              <small>
+                Email
+              </small>
+              <p>
+                {{ profile.email }}
+              </p>
+            </div>
+          </div>
+          <div class="detail">
+            <span class="material-symbols-outlined">
+              phone
+            </span>
+            <div>
+              <small>
+                Phone
+              </small>
+              <p>
+                {{ profile.phone }}
+              </p>
+            </div>
+          </div>
+          <div class="detail">
+            <span class="material-symbols-outlined">
+              location_on
+            </span>
+            <div>
+              <small>
+                Location
+              </small>
+              <p>
+                {{ profile.location }}
+              </p>
+            </div>
+          </div>
+        </div>
+        <!-- CLOSE MODAL -->
+        <button
+          type="button"
+          class="modal-close"
+          (click)="closeProfile()">
+          Close
+        </button>
+      </div>
+    </div>
+  }
+</div>

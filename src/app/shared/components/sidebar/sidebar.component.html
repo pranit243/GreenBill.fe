@@ -1,0 +1,64 @@
+<aside
+  class="sidebar"
+  [class.open]="isOpen">
+  <div class="sidebar-header">
+    <div class="logo">
+      A
+    </div>
+    <span class="logo-text">
+      Admin Panel
+    </span>
+  </div>
+  <nav class="sidebar-nav">
+    @for (menu of menuItems; track menu.name) {
+      <div
+        class="menu-item"
+        [class.active]="selectedMenu === menu.name"
+        (click)="
+          menu.children
+            ? toggleMenu(menu.name)
+            : selectMenu(menu.name)
+        ">
+        <span class="material-symbols-outlined menu-icon">
+          {{ menu.icon }}
+        </span>
+        <span class="menu-text">
+          {{ menu.name }}
+        </span>
+        <!-- Arrow -->
+        @if (menu.children) {
+          <span
+            class="material-symbols-outlined arrow"
+            [class.rotate]="expandedMenu === menu.name">
+            expand_more
+          </span>
+        }
+      </div>
+      @if (
+        menu.children &&
+        expandedMenu === menu.name
+      ) {
+        <div class="submenu">
+          @for (
+            child of menu.children;
+            track child.name
+          ) {
+            <div
+              class="submenu-item"
+              [class.active]="selectedMenu === child.name"
+              (click)="selectMenu(child.name)">
+              <!-- Submenu Icon -->
+              <span class="material-symbols-outlined">
+                {{ child.icon }}
+              </span>
+              <!-- Submenu Text -->
+              <span>
+                {{ child.name }}
+              </span>
+            </div>
+          }
+        </div>
+      }
+    }
+  </nav>
+</aside>
