@@ -47,21 +47,33 @@ export class AuthService {
   }
 
   isAuthenticated(): boolean {
-    return !!this.getToken();
+    const token = this.getToken();
+    if (!token) return false;
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return typeof payload.exp !== 'number' || payload.exp * 1000 > Date.now();
+    } catch {
+      return false;
+    }
   }
 
   getRole(): string | null {
+    return this.getRoles()[0] ?? null;
+  }
+
+  getRoles(): string[] {
     const token = this.getToken();
-    if (!token) return null;
+    if (!token) return [];
+
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
-      return (
-        payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role'] ??
-        payload['role'] ??
-        null
-      );
+      const roles = payload['http://schemas.microsoft.com/ws/2008/06/identity/claims/role']
+        ?? payload['role'];
+
+      return Array.isArray(roles) ? roles : roles ? [roles] : [];
     } catch {
-      return null;
+      return [];
     }
   }
 
